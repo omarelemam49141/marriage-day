@@ -32,8 +32,9 @@ const BADGE_MESSAGES = [
 
 const SOUND_PATHS = [
   asset("/sounds/1.mp3"),
-  asset("/sounds/2.mp3"),
-  asset("/sounds/3.mp3"),
+  asset("/sounds/6.mp3"),
+  asset("/sounds/7.mp3"),
+  asset("/sounds/1.mp3")
 ];
 
 let audioCtx: AudioContext | null = null;
