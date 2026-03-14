@@ -2,7 +2,6 @@
 
 import { MousePointer2 } from "lucide-react";
 
-import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/hooks/useTranslations";
 
@@ -28,7 +27,6 @@ export function Header() {
         >
           <MousePointer2 className="rtl:rotate-180" />
         </Button>
-        <LanguageSwitcher />
       </div>
     </header>
   );

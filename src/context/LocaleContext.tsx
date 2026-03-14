@@ -12,19 +12,12 @@ type LocaleContextValue = {
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
-function getStoredLocale(): Locale {
-  if (typeof window === "undefined") return "ar";
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored === "en" || stored === "ar") return stored;
-  return "ar";
-}
-
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("ar");
   const [mounted, setMounted] = useState(false);
+  const locale: Locale = "ar";
 
   useEffect(() => {
-    setLocaleState(getStoredLocale());
+    if (typeof window !== "undefined") localStorage.removeItem(STORAGE_KEY);
     setMounted(true);
   }, []);
 
@@ -36,9 +29,8 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.classList.toggle("locale-en", locale === "en");
   }, [locale, mounted]);
 
-  const setLocale = useCallback((next: Locale) => {
-    setLocaleState(next);
-    if (typeof window !== "undefined") localStorage.setItem(STORAGE_KEY, next);
+  const setLocale = useCallback((_next: Locale) => {
+    // Arabic only; no-op
   }, []);
 
   return (
