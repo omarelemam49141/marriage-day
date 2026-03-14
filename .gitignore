@@ -3,7 +3,15 @@ node_modules
 
 # Next.js build and cache (do not commit)
 .next
+out
 
 # Environment
+.env
 .env.local
 .env*.local
+
+# OS and editor
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
