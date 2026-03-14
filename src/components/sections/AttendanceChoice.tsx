@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { asset } from "@/lib/assets";
+import { asset, basePath } from "@/lib/assets";
 
 const BADGE_MESSAGES = [
   { icon: "🍰", text: "مش عاوزة جاتوه؟" },
@@ -270,27 +270,50 @@ export function AttendanceChoice() {
       return;
     }
 
-    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-
-    if (!serviceId || !templateId || !publicKey) {
-      setNameError("الإعدادات ناقصة، تواصل مع صاحب الموقع.");
-      return;
-    }
-
     try {
       setIsSending(true);
-      await emailjs.send(serviceId, templateId, { name: trimmed }, publicKey);
-      setShowNameDialog(false);
-      setGuestName("");
-      setShowSuccessPopup(true);
-      try {
-        const audio = new Audio(asset("/sounds/email sent.mp3"));
-        audio.play().catch(() => {});
-      } catch {
-        // ignore
+
+      const apiUrl = `${typeof window !== "undefined" ? window.location.origin : ""}${basePath()}/api/rsvp`;
+      const res = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: trimmed }),
+      });
+
+      if (res.ok) {
+        setShowNameDialog(false);
+        setGuestName("");
+        setShowSuccessPopup(true);
+        try {
+          const audio = new Audio(asset("/sounds/email sent.mp3"));
+          audio.play().catch(() => {});
+        } catch {
+          // ignore
+        }
+        return;
       }
+
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const rsvpTemplateId =
+        process.env.NEXT_PUBLIC_EMAILJS_RSVP_TEMPLATE_ID ||
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      if (serviceId && rsvpTemplateId && publicKey) {
+        await emailjs.send(serviceId, rsvpTemplateId, { name: trimmed }, publicKey);
+        setShowNameDialog(false);
+        setGuestName("");
+        setShowSuccessPopup(true);
+        try {
+          const audio = new Audio(asset("/sounds/email sent.mp3"));
+          audio.play().catch(() => {});
+        } catch {
+          // ignore
+        }
+        return;
+      }
+
+      setNameError("حصلت مشكلة صغيرة فى الإرسال، جربى تانى بعد شوية.");
     } catch {
       setNameError("حصلت مشكلة صغيرة فى الإرسال، جربى تانى بعد شوية.");
     } finally {
