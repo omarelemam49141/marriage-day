@@ -1,3 +1,9 @@
+# Dependencies
 node_modules
+
+# Next.js build and cache (do not commit)
+.next
+
+# Environment
 .env.local
 .env*.local
