@@ -1,0 +1,30 @@
+<!--
+  EMAILJS QUIZ TEMPLATE – انسخ من أول <div> لآخر </div> (بدون التعليق) والصق في قالب الإيميل في موقع EmailJS.
+  المتغيرات المستخدمة: {{name}} {{time}} {{{quiz_rows}}} {{score}} {{total}} {{result_text}}
+  مهم جداً: في موقع EmailJS استخدم ثلاث أقواس {{{quiz_rows}}} (مو اثنتين) عشان صفوف الجدول تظهر منسّقة.
+  الملف: public/emailjs-quiz-template.html
+-->
+<div style="font-family:Tahoma,Arial,sans-serif; font-size:14px; color:#2c3e50; max-width:600px; margin:0 auto; direction:rtl; text-align:right;">
+  <div style="margin:0 0 20px 0; padding:16px 20px; background:#fff7ec; border:1px dashed #e4d6c7; border-radius:12px;">
+    <p style="margin:0 0 6px 0; font-size:12px; color:#8b5e3c;">بسم الله الرحمن الرحيم</p>
+    <h1 style="margin:0 0 12px 0; font-size:20px; color:#3a2a18;">إجابات مسجد منة – {{name}}</h1>
+    <p style="margin:0 0 4px 0; font-size:13px; color:#6b4b32;">{{time}}</p>
+    <p style="margin:12px 0 0 0; font-size:15px; color:#4a3420; line-height:1.6;">أقرت المدعوة <strong>{{name}}</strong> إنها هتلتزم بكل إجابة اختارتها والله على ما تقول شهيد.</p>
+  </div>
+  <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%; border-collapse:collapse; margin:0 0 20px 0; font-size:14px; border:1px solid #e4d6c7; border-radius:10px; overflow:hidden;">
+    <thead>
+      <tr style="background:#e4d6c7;">
+        <th style="padding:10px 14px; border:1px solid #e4d6c7; color:#3a2a18; font-weight:bold;">#</th>
+        <th style="padding:10px 14px; border:1px solid #e4d6c7; color:#3a2a18; font-weight:bold;">السؤال</th>
+        <th style="padding:10px 14px; border:1px solid #e4d6c7; color:#3a2a18; font-weight:bold;">الإجابة</th>
+      </tr>
+    </thead>
+    <tbody>{{{quiz_rows}}}</tbody>
+  </table>
+  <div style="margin:0 0 16px 0; padding:14px 18px; background:#f5ebe0; border-radius:10px; border-right:4px solid #c9a86c;">
+    <p style="margin:0 0 6px 0; font-size:13px; color:#5c4a3a; font-weight:bold;">النتيجة النهائية</p>
+    <p style="margin:0; font-size:15px; color:#3a2a18;">النتيجة: {{score}} من {{total}}</p>
+    <p style="margin:8px 0 0 0; font-size:15px; color:#4a3420; font-weight:600;">{{result_text}}</p>
+  </div>
+  <p style="margin:0; font-size:11px; color:#a07a55;">— أرسل أوتوماتيك من موقع إشّهار للعرسان منة وعمر</p>
+</div>

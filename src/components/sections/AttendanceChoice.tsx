@@ -402,10 +402,10 @@ export function AttendanceChoice() {
         }}
       >
         <DialogContent
-          className="dialog-zoom-in-slow p-0 overflow-hidden bg-transparent border-none text-center data-[state=closed]:duration-300"
+          className="mosque-dialog-close-light border-2 border-zinc-600 bg-zinc-900 text-zinc-100 text-center"
           overlayClassName="bg-black/85 backdrop-blur-md"
         >
-          <div className="mosque-modal-inner w-full min-h-full rounded-xl border-2 border-zinc-600 bg-zinc-900 p-6 text-zinc-100">
+          <div className="mosque-modal-inner">
             <motion.div
               initial={{ opacity: 0.95 }}
               animate={{ opacity: 1 }}
@@ -417,7 +417,7 @@ export function AttendanceChoice() {
                   <DialogTitle className="text-xl font-bold text-zinc-50">متأكدة؟</DialogTitle>
                   <p className="text-lg font-semibold">فعلا؟</p>
                   <p className="text-lg font-semibold">بجد؟</p>
-                  <p className="text-base text-zinc-400">حد مهددك عشان تختارى ده؟</p>
+                  <p className="text-base text-zinc-400">مفيش حد مهددك....؟</p>
                 </div>
               </DialogHeader>
               <div className="mt-4 flex flex-row justify-center gap-4">
