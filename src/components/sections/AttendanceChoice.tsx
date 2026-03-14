@@ -293,10 +293,9 @@ export function AttendanceChoice() {
         return;
       }
 
+      // API not available (e.g. static deploy). Only use a dedicated RSVP template – never the quiz template.
       const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-      const rsvpTemplateId =
-        process.env.NEXT_PUBLIC_EMAILJS_RSVP_TEMPLATE_ID ||
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const rsvpTemplateId = process.env.NEXT_PUBLIC_EMAILJS_RSVP_TEMPLATE_ID;
       const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
       if (serviceId && rsvpTemplateId && publicKey) {
@@ -313,7 +312,7 @@ export function AttendanceChoice() {
         return;
       }
 
-      setNameError("حصلت مشكلة صغيرة فى الإرسال، جربى تانى بعد شوية.");
+      setNameError("الإرسال مش شغال دلوقتي. تواصلي مع صاحب الموقع.");
     } catch {
       setNameError("حصلت مشكلة صغيرة فى الإرسال، جربى تانى بعد شوية.");
     } finally {
