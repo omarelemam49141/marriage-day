@@ -550,12 +550,12 @@ export function AttendanceChoice() {
             >
               ✉️
             </motion.div>
-            <DialogHeader>
+            <DialogHeader className="text-center">
               <DialogTitle className="text-xl font-bold text-primary">
                 تم! الدعوة اتبعت والبيت يستنيكي
               </DialogTitle>
             </DialogHeader>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-center text-muted-foreground text-sm">
               منة وعمر هيسعدوا بيكي إن شاء الله
             </p>
             <motion.button
@@ -565,7 +565,7 @@ export function AttendanceChoice() {
               whileTap={{ scale: 0.96 }}
               className="rounded-xl bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-md hover:bg-primary/90"
             >
-              تمام، خلاص
+              فل 🌸
             </motion.button>
           </motion.div>
         </DialogContent>
