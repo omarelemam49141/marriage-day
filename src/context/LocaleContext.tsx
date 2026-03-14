@@ -23,11 +23,11 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!mounted) return;
-    document.documentElement.lang = locale;
-    document.documentElement.dir = locale === "ar" ? "rtl" : "ltr";
-    document.documentElement.classList.toggle("locale-ar", locale === "ar");
-    document.documentElement.classList.toggle("locale-en", locale === "en");
-  }, [locale, mounted]);
+    document.documentElement.lang = "ar";
+    document.documentElement.dir = "rtl";
+    document.documentElement.classList.add("locale-ar");
+    document.documentElement.classList.remove("locale-en");
+  }, [mounted]);
 
   const setLocale = useCallback((_next: Locale) => {
     // Arabic only; no-op
