@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { asset } from "@/lib/assets";
+import { asset, homeHref } from "@/lib/assets";
 import { MOSQUE_QUIZ_QUESTIONS as QUESTIONS } from "@/lib/mosque-quiz-questions";
 
 const WOLF_SOUNDS = [
@@ -659,7 +659,7 @@ export default function MosqueQuizPage() {
 
                   <div className="mt-2 flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-6">
                     <motion.a
-                      href="/"
+                      href={homeHref()}
                       className={`inline-flex shrink-0 items-center justify-center gap-2 rounded-xl px-8 py-3 text-sm font-semibold shadow-lg transition-colors ${
                         passed
                           ? "bg-emerald-600 text-white hover:bg-emerald-500"
