@@ -33,8 +33,9 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          # GitHub Pages serves at https://<user>.github.io/<repo>/
-          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+          # Must match the URL path: https://<user>.github.io/<repo>/
+          # Set variable NEXT_PUBLIC_BASE_PATH (e.g. /marriage-day) in Settings → Actions, or it defaults to repo name
+          NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH || format('/{0}', github.event.repository.name) }}
           # Add in repo Settings → Secrets and variables → Actions (variables):
           NEXT_PUBLIC_EMAILJS_SERVICE_ID: ${{ vars.NEXT_PUBLIC_EMAILJS_SERVICE_ID }}
           NEXT_PUBLIC_EMAILJS_TEMPLATE_ID: ${{ vars.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID }}
