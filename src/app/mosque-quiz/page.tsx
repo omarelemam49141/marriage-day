@@ -11,22 +11,23 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { asset } from "@/lib/assets";
 import { MOSQUE_QUIZ_QUESTIONS as QUESTIONS } from "@/lib/mosque-quiz-questions";
 
 const WOLF_SOUNDS = [
-  "/sounds/mosque-quiz/wolf-1.mp3",
-  "/sounds/mosque-quiz/wolf-2.mp3",
-  "/sounds/mosque-quiz/wolf-3.mp3",
+  asset("/sounds/mosque-quiz/wolf-1.mp3"),
+  asset("/sounds/mosque-quiz/wolf-2.mp3"),
+  asset("/sounds/mosque-quiz/wolf-3.mp3"),
 ];
 
 const ANSWER_SOUNDS = [
-  "/sounds/mosque-quiz/answers/angry-cat.mp3",
-  "/sounds/mosque-quiz/answers/angry-elephant.mp3",
-  "/sounds/mosque-quiz/answers/annoying birds.mp3",
-  "/sounds/mosque-quiz/answers/fingers-tipping-annoying.mp3",
-  "/sounds/mosque-quiz/answers/metal-squeez.mp3",
-  "/sounds/mosque-quiz/answers/toy-squeezing.mp3",
-  "/sounds/mosque-quiz/answers/wow-annoying.mp3",
+  asset("/sounds/mosque-quiz/answers/angry-cat.mp3"),
+  asset("/sounds/mosque-quiz/answers/angry-elephant.mp3"),
+  asset("/sounds/mosque-quiz/answers/annoying birds.mp3"),
+  asset("/sounds/mosque-quiz/answers/fingers-tipping-annoying.mp3"),
+  asset("/sounds/mosque-quiz/answers/metal-squeez.mp3"),
+  asset("/sounds/mosque-quiz/answers/toy-squeezing.mp3"),
+  asset("/sounds/mosque-quiz/answers/wow-annoying.mp3"),
 ];
 
 type Phase = "intro" | "quiz" | "result";
@@ -88,6 +89,7 @@ export default function MosqueQuizPage() {
   const selectedOption = answersByQuestion[currentQ] ?? null;
   const [badgeMessages, setBadgeMessages] = useState<Record<number, string>>({});
   const [hoveredSpecialOption, setHoveredSpecialOption] = useState<number | null>(null);
+  const [quizImageError, setQuizImageError] = useState(false);
 
   const rainRef = useRef<HTMLAudioElement | null>(null);
   const cricketsRef = useRef<HTMLAudioElement | null>(null);
@@ -98,13 +100,13 @@ export default function MosqueQuizPage() {
   const firstAnswerSoundPlayed = useRef(false);
 
   useEffect(() => {
-    const rain = new Audio("/sounds/mosque-quiz/rain-lightning.mp3");
+    const rain = new Audio(asset("/sounds/mosque-quiz/rain-lightning.mp3"));
     rain.loop = true;
     rain.volume = 0.25;
     rainRef.current = rain;
     rain.play().catch(() => {});
 
-    const crickets = new Audio("/sounds/mosque-quiz/crickets.mp3");
+    const crickets = new Audio(asset("/sounds/mosque-quiz/answers/crickets.mp3"));
     crickets.loop = true;
     crickets.volume = 0.15;
     cricketsRef.current = crickets;
@@ -314,7 +316,7 @@ export default function MosqueQuizPage() {
       setConfirmLastName("");
       setPhase("result");
       try {
-        const audio = new Audio("/sounds/email sent.mp3");
+        const audio = new Audio(asset("/sounds/email sent.mp3"));
         audio.play().catch(() => {});
       } catch {
         // ignore
@@ -430,11 +432,18 @@ export default function MosqueQuizPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15 }}
                 >
-                  <img
-                    src="/images/quiz.png"
-                    alt="مين عاوز يروح المسجد!"
-                    className="h-auto w-full max-h-44 max-w-2xl object-contain"
-                  />
+                  {!quizImageError ? (
+                    <img
+                      src={asset("/images/quiz.png")}
+                      alt="مين عاوز يروح المسجد!"
+                      className="h-auto w-full max-h-44 max-w-2xl object-contain"
+                      onError={() => setQuizImageError(true)}
+                    />
+                  ) : (
+                    <div className="flex max-h-44 min-h-28 items-center justify-center bg-zinc-800/50 px-6 py-4 text-center text-lg font-medium text-zinc-200">
+                      مين عاوز يروح المسجد!
+                    </div>
+                  )}
                 </motion.div>
 
                 <div className="mx-auto mb-6 flex items-center justify-center gap-2">
@@ -757,7 +766,7 @@ export default function MosqueQuizPage() {
             transition={{ type: "spring", damping: 15, stiffness: 300 }}
           >
             <video
-              src="/videos/rejected.mp4"
+              src={asset("/videos/rejected.mp4")}
               controls
               autoPlay
               playsInline

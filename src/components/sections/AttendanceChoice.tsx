@@ -13,6 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { asset } from "@/lib/assets";
 
 const BADGE_MESSAGES = [
   { icon: "🍰", text: "مش عاوزة جاتوه؟" },
@@ -29,7 +30,11 @@ const BADGE_MESSAGES = [
   { icon: "🪜", text: "ياااه لو البيت فى الدور التالت, للأسف التالت علوى بعيد" },
 ] as const;
 
-const SOUND_PATHS = ["/sounds/1.mp3", "/sounds/5.mp3", "/sounds/7.mp3", "/sounds/1.mp3"];
+const SOUND_PATHS = [
+  asset("/sounds/1.mp3"),
+  asset("/sounds/2.mp3"),
+  asset("/sounds/3.mp3"),
+];
 
 let audioCtx: AudioContext | null = null;
 
@@ -140,8 +145,8 @@ export function AttendanceChoice() {
 
   useEffect(() => {
     if (!showMosqueDialog) return;
-    const lightning = new Audio("/sounds/lightning.mp3");
-    const heart = new Audio("/sounds/heart-beating.mp3");
+    const lightning = new Audio(asset("/sounds/lightning.mp3"));
+    const heart = new Audio(asset("/sounds/heart-beating.mp3"));
     lightningAudioRef.current = lightning;
     heartAudioRef.current = heart;
     lightning.play().catch(() => {});
@@ -181,7 +186,7 @@ export function AttendanceChoice() {
   const playWarmNatureShort = () => {
     stopNatureSound();
     try {
-      const n = new Audio("/sounds/warm-nature.mp3");
+      const n = new Audio(asset("/sounds/warm-nature.mp3"));
       natureAudioRef.current = n;
       n.play().catch(() => {});
       natureTimeoutRef.current = setTimeout(() => {
@@ -213,7 +218,7 @@ export function AttendanceChoice() {
     stopMosqueSounds();
     setShowMosqueDialog(false);
     try {
-      const doorSlam = new Audio("/sounds/mosque-quiz/door-slam.mp3");
+      const doorSlam = new Audio(asset("/sounds/mosque-quiz/answers/door-slam.mp3"));
       doorSlam.play().catch(() => {});
     } catch {
       // ignore
@@ -280,7 +285,7 @@ export function AttendanceChoice() {
       setGuestName("");
       setShowSuccessPopup(true);
       try {
-        const audio = new Audio("/sounds/email sent.mp3");
+        const audio = new Audio(asset("/sounds/email sent.mp3"));
         audio.play().catch(() => {});
       } catch {
         // ignore
