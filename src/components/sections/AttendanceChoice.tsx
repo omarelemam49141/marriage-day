@@ -275,7 +275,7 @@ export function AttendanceChoice() {
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
     if (!serviceId || !rsvpTemplateId || !publicKey) {
-      setNameError("الإعدادات ناقصة. ضيف NEXT_PUBLIC_EMAILJS_RSVP_TEMPLATE_ID (قالب تلبية الدعوة في EmailJS).");
+      setNameError("ضيف NEXT_PUBLIC_EMAILJS_RSVP_TEMPLATE_ID في .env.local (رقم قالب تلبية الدعوة من EmailJS) واعملي rebuild.");
       return;
     }
 
