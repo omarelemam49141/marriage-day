@@ -98,6 +98,7 @@ export default function MosqueQuizPage() {
     ANSWER_SOUNDS.map((_, i) => i),
   );
   const firstAnswerSoundPlayed = useRef(false);
+  const satanAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const rain = new Audio(asset("/sounds/mosque-quiz/rain-lightning.mp3"));
@@ -180,13 +181,34 @@ export default function MosqueQuizPage() {
   const handleSelectOption = useCallback(
     (optionIndex: number) => {
       if (transitioning) return;
+      if (currentQ === 1) {
+        const wasSatan = answersByQuestion[currentQ] === 8;
+        if (wasSatan && optionIndex !== 8) {
+          const satan = satanAudioRef.current;
+          if (satan) {
+            satan.pause();
+            satan.currentTime = 0;
+            satanAudioRef.current = null;
+          }
+        }
+      }
       setAnswersByQuestion((prev) => ({ ...prev, [currentQ]: optionIndex }));
       const badge = getBadgeTextForOption(optionIndex);
       if (badge) {
         setBadgeMessages((prev) => ({ ...prev, [optionIndex]: badge }));
       }
+      if (currentQ === 1 && optionIndex === 8) {
+        try {
+          const audio = new Audio(asset("/sounds/mosque-quiz/satan.mp3"));
+          audio.volume = 0.5;
+          satanAudioRef.current = audio;
+          audio.play().catch(() => {});
+        } catch {
+          // ignore
+        }
+      }
     },
-    [transitioning, currentQ, getBadgeTextForOption],
+    [transitioning, currentQ, getBadgeTextForOption, answersByQuestion],
   );
 
   const playAnswerSoundOnce = useCallback(() => {
@@ -336,7 +358,7 @@ export default function MosqueQuizPage() {
   const question = QUESTIONS[currentQ];
   const passed = score === QUESTIONS.length;
 
-  const optionLabels = ["أ", "ب", "ج", "د", "ه", "و", "ز", "ح"];
+  const optionLabels = ["أ", "ب", "ج", "د", "ه", "و", "ز", "ح", "ط"];
   const isDressCodeQuestion = currentQ === 1;
   const specialOptionNoNext = isDressCodeQuestion && (selectedOption === 0 || selectedOption === 7);
   const isSpecialOption = (i: number) =>
@@ -362,6 +384,12 @@ export default function MosqueQuizPage() {
   useEffect(() => {
     setBadgeMessages({});
     setHoveredSpecialOption(null);
+    const satan = satanAudioRef.current;
+    if (satan) {
+      satan.pause();
+      satan.currentTime = 0;
+      satanAudioRef.current = null;
+    }
   }, [currentQ]);
 
   return (
@@ -498,8 +526,13 @@ export default function MosqueQuizPage() {
                     ? "border-primary/70 bg-zinc-800 ring-2 ring-primary/30"
                     : "border-zinc-700/60 bg-zinc-800/70 hover:border-zinc-500 hover:bg-zinc-800";
 
+                  const isFullWidthOption = isDressCodeQuestion && i === 8;
+
                   return (
-                    <div key={i} className="relative flex min-h-0 flex-col">
+                    <div
+                      key={i}
+                      className={`relative flex min-h-0 flex-col ${isFullWidthOption ? "col-span-2" : ""}`}
+                    >
                       {showBadgeAboveThisOption && (
                         <motion.div
                           className="absolute bottom-full left-1/2 z-10 mb-2 max-w-[18rem] -translate-x-1/2 rounded-xl border border-amber-500/40 bg-amber-950/90 px-4 py-2 text-center text-sm font-medium text-amber-200 shadow-lg"
