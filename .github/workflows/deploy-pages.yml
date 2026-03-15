@@ -38,6 +38,14 @@ jobs:
             echo "NEXT_PUBLIC_BASE_PATH=/${{ github.event.repository.name }}" >> $GITHUB_ENV
           fi
 
+      - name: Check required variables
+        run: |
+          if [ -z "${{ vars.NEXT_PUBLIC_EMAILJS_RSVP_TEMPLATE_ID }}" ]; then
+            echo "::error::NEXT_PUBLIC_EMAILJS_RSVP_TEMPLATE_ID is not set. Add it in Settings → Actions → Variables."
+            exit 1
+          fi
+          echo "NEXT_PUBLIC_EMAILJS_RSVP_TEMPLATE_ID is set."
+
       - name: Build
         run: npm run build
         env:
