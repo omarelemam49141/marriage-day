@@ -271,11 +271,13 @@ export function AttendanceChoice() {
     }
 
     const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-    const rsvpTemplateId = process.env.NEXT_PUBLIC_EMAILJS_RSVP_TEMPLATE_ID;
+    const rsvpTemplateId =
+      process.env.NEXT_PUBLIC_EMAILJS_RSVP_TEMPLATE_ID ||
+      process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
     if (!serviceId || !rsvpTemplateId || !publicKey) {
-      setNameError("ضيف NEXT_PUBLIC_EMAILJS_RSVP_TEMPLATE_ID في .env.local (رقم قالب تلبية الدعوة من EmailJS) واعملي rebuild.");
+      setNameError("الإرسال مش شغال دلوقتي. تواصلي مع صاحب الموقع.");
       return;
     }
 
@@ -451,7 +453,13 @@ export function AttendanceChoice() {
         </DialogContent>
       </Dialog>
 
-      <Dialog open={showNameDialog} onOpenChange={setShowNameDialog}>
+      <Dialog
+        open={showNameDialog}
+        onOpenChange={(open) => {
+          setShowNameDialog(open);
+          if (!open) setNameError(null);
+        }}
+      >
         <DialogContent className="text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
