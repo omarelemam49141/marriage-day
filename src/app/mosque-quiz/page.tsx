@@ -199,9 +199,15 @@ export default function MosqueQuizPage() {
       }
       if (currentQ === 1 && optionIndex === 8) {
         try {
-          const audio = new Audio(asset("/sounds/mosque-quiz/satan.mp3"));
-          audio.volume = 0.5;
-          satanAudioRef.current = audio;
+          let audio = satanAudioRef.current;
+          if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
+          } else {
+            audio = new Audio(asset("/sounds/mosque-quiz/satan.mp3"));
+            audio.volume = 0.5;
+            satanAudioRef.current = audio;
+          }
           audio.play().catch(() => {});
         } catch {
           // ignore
